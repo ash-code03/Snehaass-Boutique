@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { CartDrawer } from './components/CartDrawer';
+import { MobileBottomNav } from './components/MobileBottomNav';
 
 // Pages
 import { Home } from './pages/Home';
@@ -126,7 +127,6 @@ function AppContent() {
         return <Home />;
     }
   };
-
   return (
     <>
       <Header onOpenCartDrawer={() => setCartDrawerOpen(true)} />
@@ -136,6 +136,9 @@ function AppContent() {
       </main>
 
       <Footer />
+      
+      {/* Mobile Sticky Bottom Navigation */}
+      <MobileBottomNav onOpenCartDrawer={() => setCartDrawerOpen(true)} />
       
       {/* Floating Elements */}
       <FloatingWhatsApp />

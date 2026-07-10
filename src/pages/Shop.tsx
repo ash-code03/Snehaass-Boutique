@@ -431,6 +431,16 @@ export const Shop: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Floating Mobile Filter Trigger */}
+      <button 
+        className="mobile-floating-filter-btn"
+        onClick={() => setMobileFiltersOpen(true)}
+        style={styles.floatingFilterBtn}
+      >
+        <FiFilter size={18} />
+        <span>Filter</span>
+      </button>
     </div>
   );
 };
@@ -438,7 +448,26 @@ export const Shop: React.FC = () => {
 const styles: { [key: string]: React.CSSProperties } = {
   page: {
     minHeight: '80vh',
-    paddingBottom: '4rem',
+    paddingBottom: '6rem', // extra space for bottom nav
+  },
+  floatingFilterBtn: {
+    position: 'fixed',
+    bottom: '80px', // float above mobile bottom nav (65px)
+    right: '20px',
+    backgroundColor: 'var(--color-charcoal)',
+    color: 'var(--color-white)',
+    border: 'none',
+    borderRadius: '30px',
+    padding: '0.8rem 1.5rem',
+    display: 'none', // managed by media query
+    alignItems: 'center',
+    gap: '8px',
+    fontSize: '0.85rem',
+    fontWeight: 600,
+    boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+    zIndex: 998,
+    letterSpacing: '0.05em',
+    textTransform: 'uppercase',
   },
   shopHeader: {
     backgroundColor: 'var(--color-cream-dark)',
@@ -733,6 +762,42 @@ const injectShopResponsive = () => {
       button[style*="mobileFilterToggle"] { display: flex !important; }
       section[style*="mainGrid"] {
         grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+      }
+    }
+    @media (max-width: 767px) {
+      .mobile-floating-filter-btn {
+        display: flex !important;
+      }
+      .grid-responsive {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      section[style*="shopHeader"] {
+        padding: 2rem 0 !important;
+        margin-bottom: 1.5rem !important;
+      }
+      h2[style*="title"] {
+        font-size: 1.8rem !important;
+      }
+      div[style*="controlsBar"] {
+        padding: 0.6rem 0.8rem !important;
+        margin-bottom: 1rem !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+      }
+      div[style*="sortWrapper"] {
+        width: 100% !important;
+        justify-content: space-between !important;
+      }
+      select[style*="sortSelect"] {
+        flex: 1 !important;
+        max-width: 200px !important;
+      }
+    }
+    @media (min-width: 768px) {
+      .mobile-floating-filter-btn {
+        display: none !important;
       }
     }
   `;

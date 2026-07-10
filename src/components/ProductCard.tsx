@@ -71,6 +71,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <FiHeart size={18} fill={isFavorite ? 'var(--color-accent-dark)' : 'none'} />
         </button>
 
+        {/* Mobile-Only Quick Add Button */}
+        <button 
+          className="mobile-quick-add-btn"
+          onClick={handleQuickAdd}
+          disabled={product.stock <= 0}
+          style={{
+            ...styles.wishlistBtn,
+            top: '54px',
+            color: 'var(--color-white)',
+            backgroundColor: product.stock <= 0 ? 'var(--color-charcoal-light)' : 'var(--color-charcoal)',
+            opacity: product.stock <= 0 ? 0.6 : 0.9,
+            display: 'none', // Overridden by media query
+          }}
+          title={product.stock <= 0 ? 'Sold Out' : 'Quick Add to Bag'}
+        >
+          <FiShoppingBag size={16} />
+        </button>
+
         {/* Product Image Frame */}
         <div style={styles.imageFrame}>
           <img 
@@ -305,3 +323,45 @@ const styles: { [key: string]: React.CSSProperties } = {
     animation: 'fadeIn 0.2s ease',
   }
 };
+
+const injectProductCardStyles = () => {
+  const styleEl = document.createElement('style');
+  styleEl.innerHTML = `
+    @media (max-width: 767px) {
+      .mobile-quick-add-btn {
+        display: flex !important;
+      }
+      div[style*="details"] {
+        padding: 0.8rem !important;
+      }
+      h3[style*="name"] {
+        font-size: 0.85rem !important;
+        margin-bottom: 0.3rem !important;
+        height: 2.6em;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      span[style*="category"] {
+        font-size: 0.6rem !important;
+      }
+      div[style*="priceRow"] span {
+        font-size: 0.95rem !important;
+      }
+      div[style*="ratingRow"] {
+        margin-bottom: 0.4rem !important;
+        gap: 3px !important;
+      }
+    }
+    @media (min-width: 768px) {
+      .mobile-quick-add-btn {
+        display: none !important;
+      }
+    }
+  `;
+  document.head.appendChild(styleEl);
+};
+if (typeof window !== 'undefined') {
+  injectProductCardStyles();
+}

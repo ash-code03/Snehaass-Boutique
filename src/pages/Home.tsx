@@ -52,6 +52,16 @@ export const Home: React.FC = () => {
     { name: 'Accessories', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80', count: products.filter(p => p.category === 'Accessories').length }
   ];
 
+  const mobileCategories = [
+    { name: 'Sarees', image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=150&q=80', link: '#/shop?category=Sarees' },
+    { name: 'Kurtis', image: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=150&q=80', link: '#/shop?category=Kurtis' },
+    { name: 'Salwars', image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=150&q=80', link: '#/shop?category=Salwars' },
+    { name: 'Lehengas', image: 'https://images.unsplash.com/photo-1610030469668-93535c17b6b3?auto=format&fit=crop&w=150&q=80', link: '#/shop?category=Lehengas' },
+    { name: 'Western', image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=150&q=80', link: '#/shop?category=Western Wear' },
+    { name: 'Boutique', image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=150&q=80', link: '#/shop?category=Boutique Collections' },
+    { name: 'Jewels', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=150&q=80', link: '#/shop?category=Accessories' },
+  ];
+
   const testimonials = [
     {
       quote: "The fabric quality from Snehaas Boutique is simply unparalleled. The Kanchipuram silk saree I ordered feels like a luxury heirloom, and the zari work shines brilliantly.",
@@ -112,6 +122,18 @@ export const Home: React.FC = () => {
           ))}
         </div>
       </section>
+
+      {/* Circular Category Quick-Links for Mobile */}
+      <div className="mobile-categories-row" style={styles.mobileCategoriesRow}>
+        {mobileCategories.map((cat) => (
+          <a key={cat.name} href={cat.link} style={styles.mobileCategoryCircle}>
+            <div style={styles.circleImageWrapper}>
+              <img src={cat.image} alt={cat.name} style={styles.circleImage} />
+            </div>
+            <span style={styles.circleLabel}>{cat.name}</span>
+          </a>
+        ))}
+      </div>
 
       {/* 2. Value Propositions */}
       <section style={styles.propsSection}>
@@ -267,6 +289,54 @@ export const Home: React.FC = () => {
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
     width: '100%',
+  },
+  mobileCategoriesRow: {
+    display: 'none', // Shown on mobile via media query
+    overflowX: 'auto',
+    whiteSpace: 'nowrap',
+    padding: '1.2rem 1rem',
+    backgroundColor: 'var(--color-cream)',
+    gap: '1.2rem',
+    borderBottom: '1px solid var(--color-border)',
+  },
+  mobileCategoryCircle: {
+    display: 'inline-flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textDecoration: 'none',
+    width: '72px',
+    flexShrink: 0,
+  },
+  circleImageWrapper: {
+    width: '60px',
+    height: '60px',
+    borderRadius: '50%',
+    overflow: 'hidden',
+    border: '2px solid var(--color-primary)',
+    padding: '2px',
+    backgroundColor: 'var(--color-white)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: 'var(--shadow-subtle)',
+  },
+  circleImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: '50%',
+    objectFit: 'cover',
+  },
+  circleLabel: {
+    fontSize: '0.65rem',
+    fontWeight: 600,
+    color: 'var(--color-charcoal-light)',
+    marginTop: '6px',
+    textAlign: 'center',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    width: '100%',
+    letterSpacing: '0.02em',
   },
   heroSection: {
     height: '80vh',
@@ -580,14 +650,37 @@ const injectHomeAnimations = () => {
       }
     }
     @media (max-width: 768px) {
+      .mobile-categories-row::-webkit-scrollbar {
+        display: none !important;
+      }
+      .mobile-categories-row {
+        display: flex !important;
+      }
+      .grid-responsive {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      div[style*="heroSection"] {
+        height: 55vh !important;
+        min-height: 380px !important;
+      }
+      div[style*="heroSlide"] {
+        background-position: center top !important;
+      }
+      div[style*="heroTextContainer"] {
+        padding: 0 1rem !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
       div[style*="promoGrid"] {
         grid-template-columns: 1fr !important;
       }
       h2[style*="heroTitle"] {
-        font-size: 2.5rem !important;
+        font-size: 2.0rem !important;
       }
       p[style*="heroDesc"] {
-        font-size: 0.9rem !important;
+        font-size: 0.85rem !important;
+        margin-bottom: 1.5rem !important;
       }
     }
     @media (max-width: 576px) {
